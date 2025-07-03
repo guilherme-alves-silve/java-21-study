@@ -1,4 +1,4 @@
-package exercise1.maxthreads;
+package exercise1;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;

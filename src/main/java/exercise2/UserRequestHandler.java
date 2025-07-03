@@ -12,9 +12,58 @@ public class UserRequestHandler implements Callable<String> {
 
 	@Override
 	public String call() throws Exception {
-		return sequentialCall();
-		
+		return newCallForExercise();
 	}
+
+  private String newCallForExercise() {
+    try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+      var result1 = executor.submit(this::dbCall1).get();
+      var result2 = executor.submit(this::dbCall2).get();
+
+      var task1 = executor.submit(this::restCall1);
+      var task2 = executor.submit(this::restCall2);
+
+      return "[" + result1 + "," + result2 + "," + task1.get() + "," + task2.get() + "]";
+    } catch (Exception ex) {
+      throw new RuntimeException(ex);
+    }
+  }
+
+  private String dbCall1() {
+    try {
+      var network = new NetworkCaller("dbCall1");
+      return network.makeCall(2);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private String dbCall2() {
+    try {
+      var network = new NetworkCaller("dbCall2");
+      return network.makeCall(3);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private String restCall1() {
+    try {
+      var network = new NetworkCaller("restCall1");
+      return network.makeCall(4);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private String restCall2() {
+    try {
+      var network = new NetworkCaller("restCall2");
+      return network.makeCall(5);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 
 	/**
 	 * User Request Handler which runs the sub tasks concurrently
@@ -53,23 +102,19 @@ public class UserRequestHandler implements Callable<String> {
 	 */
 	private String concurrentCallFunctional() throws Exception {
 		try (ExecutorService service = Executors.newVirtualThreadPerTaskExecutor()) {
-			
 			String result = service.invokeAll(Arrays.asList(this::dbCall, this::restCall))
 				.stream()
 				.map(f -> {
 					
 					try {
 						return (String)f.get();
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						return null;
 					}
-					
 				})
 				.collect(Collectors.joining(","));
-			
+
 			return "[" + result + "]";
-			
 		}
 	}
 
@@ -124,7 +169,7 @@ public class UserRequestHandler implements Callable<String> {
 	 */
 	private String dbCall() {
 		try {
-			NetworkCaller caller = new NetworkCaller("data");
+			var caller = new NetworkCaller("data");
 			return caller.makeCall(2);
 		}
 		catch (Exception e) {
@@ -139,14 +184,13 @@ public class UserRequestHandler implements Callable<String> {
 	 */
 	private String restCall() {
 		try {
-			NetworkCaller caller = new NetworkCaller("rest");
+			var caller = new NetworkCaller("rest");
 			return caller.makeCall(5);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
 
 	/**

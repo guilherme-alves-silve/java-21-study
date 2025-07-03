@@ -5,14 +5,14 @@ import java.net.URI;
 
 /**
  * This class simulates a Network Call with delay using
- * the site http://httpbin.org/delay/<secs>
- * 
+ * the site <a href="http://httpbin.org/delay/">...</a><secs>
+ *
  * @author vshetty
  *
  */
 public class NetworkCaller {
 	
-	private String callName;
+	private final String callName;
 
 	public NetworkCaller(String callName) {
 		this.callName = callName;
@@ -21,17 +21,13 @@ public class NetworkCaller {
 	public String makeCall(int secs) throws Exception {
 		
 		System.out.println(callName + " : BEG call : " + Thread.currentThread());
-		
 		try {
-			URI uri = new URI("http://httpbin.org/delay/" + secs);
+			var uri = URI.create("http://httpbin.org/delay/" + secs);
 			try (InputStream stream = uri.toURL().openStream()) {
 				return new String(stream.readAllBytes());
 			}
-		}
-		finally {
+		} finally {
 			System.out.println(callName + " : END call : " + Thread.currentThread());
 		}
-		
 	}
-
 }
