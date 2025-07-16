@@ -37,7 +37,11 @@ public class LongRunningTask implements Callable<LongRunningTask.TaskResponse> {
         this.fail = fail;
     }
 
-    /*
+  public String getName() {
+    return name;
+  }
+
+  /*
      * Body of the task which will be run on a separate Thread (mostly
      * Virtual Thread)
      */
@@ -56,8 +60,7 @@ public class LongRunningTask implements Callable<LongRunningTask.TaskResponse> {
             
             print("Working .." + numSecs);
             
-             // process data (Code not shown) which uses CPU for 0.2 secs 
-            
+             // process data (Code not shown) which uses CPU for 0.2 secs
             try {
                 Thread.sleep(Duration.ofSeconds(1));
                 // new HttpCaller(name).makeCall(1);
@@ -65,7 +68,6 @@ public class LongRunningTask implements Callable<LongRunningTask.TaskResponse> {
             catch (InterruptedException intExp) {
                 throwInterruptedException();
             }
-
             // process data (Code not shown) which uses CPU for 0.2 secs 
         }
         
@@ -94,8 +96,7 @@ public class LongRunningTask implements Callable<LongRunningTask.TaskResponse> {
     private void print(String message) {
         System.out.printf("> %s : %s\n", name, message);
     }
-    
-    
+
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         
         System.out.println("> Main : Started");
@@ -111,5 +112,4 @@ public class LongRunningTask implements Callable<LongRunningTask.TaskResponse> {
         
         System.out.println("> Main : Completed");
     }
-    
 }

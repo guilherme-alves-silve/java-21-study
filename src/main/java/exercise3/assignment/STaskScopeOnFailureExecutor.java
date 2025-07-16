@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.StructuredTaskScope;
 import java.util.concurrent.StructuredTaskScope.Subtask;
 import java.util.concurrent.StructuredTaskScope.Subtask.State;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -66,12 +67,12 @@ public class STaskScopeOnFailureExecutor {
                 = subTasks.stream()
                     .filter(sub -> sub.state() == State.SUCCESS)
                     .map(Subtask::get)
-                    .collect(Collectors.toMap(TaskResponse::name, r -> r));
+                    .collect(Collectors.toMap(TaskResponse::name, Function.identity()));
     
             return output;
         }
-        
-        // close() method on scope will ensure that all sub tasks 
+
+        // close() method on scope will ensure that all sub tasks
         // are terminated.
     }
 

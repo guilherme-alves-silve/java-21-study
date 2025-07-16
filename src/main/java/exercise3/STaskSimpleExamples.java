@@ -10,15 +10,11 @@ import java.util.concurrent.StructuredTaskScope.Subtask.State;
 public class STaskSimpleExamples {
     
     public static void main(String[] args) throws Exception {
-    	
         System.out.println("Main : Started");
-        
         // Simulate interrupt to the Main Thread before Child threads complete
         //interruptMain();
         exampleShutdownOnFailure();
-        
         System.out.println("Main : Completed");
-
     }
     
     private static void exampleShutdownOnFailure() 
@@ -80,7 +76,6 @@ public class STaskSimpleExamples {
             else if (hotState == State.FAILED)
                 System.out.println(hotSubTask.exception());
         }
-        
     }
     
     
