@@ -6,11 +6,11 @@ Course(s):
 - [Java 21 Virtual Threads and Structured Concurrency](https://www.udemy.com/course/virtual-threads)
   - [x] Introduction
   - [x] Java Threads and Scalability
-  - [ ] Project Loom and Virtual Threads
-  - [ ] Virtua Threads with Java Executor, Futures and Completable Futures
-  - [ ] Structured Concurrency
-  - [ ] Thread Locals and Scoped Values
-  - [ ] Delimited Continuations
-  - [ ] Virtual Threads and scalability with Spring Boot
-  - [ ] Conclusion
-  - [ ] Bonus - Java Futures and Completable Futures Tutorial
+  - [x] Project Loom and Virtual Threads
+  - [x] Virtual Threads with Java Executor, Futures and Completable Futures
+  - [x] Structured Concurrency
+  - [x] Thread Locals and Scoped Values
+  - [x] Delimited Continuations
+  - [x] [Virtual Threads and scalability with Spring Boot](https://github.com/guilherme-alves-silve/spring-boot-virtual-threads)
+  - [x] Conclusion
+  - [x] Bonus - Java Futures and Completable Futures Tutorial
